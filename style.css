@@ -349,6 +349,8 @@ footer {
   .r-date { order: 3; width: 100%; }
 }
 
+#home[aria-busy="true"] { min-height: 100vh; }
+
 /* ─────────────── responsive ─────────────── */
 @media (max-width: 640px) {
   body { font-size: 16.5px; }
