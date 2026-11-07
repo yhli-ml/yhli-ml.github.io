@@ -252,7 +252,7 @@
             the request arrives, so I/O overlaps with the time it would have spent waiting in the queue anyway.
             <span class="mark">(!)</span> In a 3,379-request replay: <strong>+31.57% request throughput</strong> and
             <strong>−24.49% mean time-to-first-token</strong> compared with native prefetch. I also implemented
-            asynchronous prefix prefetching in vLLM-Ascend + UCM (MLA and GQA paths). A related patent disclosure
+            asynchronous prefix prefetching in vLLM-Ascend + UCM (MLA and GQA paths). <span class="mark">(!)</span> A related patent disclosure
             passed internal review.
           </p>
 
