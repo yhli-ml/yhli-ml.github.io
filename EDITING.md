@@ -7,13 +7,11 @@
 
 | 文件 | 内容 |
 | --- | --- |
-| `home.md` | 主页的全部文字：about、currently 卡片、research interests、story 时间线、publications、honors、service，**改主页只需要改这一个文件** |
-| `index.html` / `home.js` | 主页的外壳、三张交互图的结构和把 `home.md` 变成网页的逻辑，一般不用动 |
+| `index.html` | 主页的所有文字：about、currently 卡片、research interests、story 时间线、publications、honors、service |
 | `reading.md` | reading 页面的全部笔记，**写随笔只需要改这一个文件** |
 | `reading.html` / `reading.js` | reading 页面的结构和逻辑，一般不用动 |
 | `style.css` | 颜色、字体、布局 |
-| `script.js` | 主题切换和三张交互图的逻辑 |
-| `vendor/marked.min.js` | 把 Markdown 转成网页的小程序库，不用动 |
+| `script.js` | 主页上三个交互小图的逻辑 |
 
 ## 三种编辑方式
 
@@ -39,7 +37,7 @@ git commit -m "Add reading note"
 git push
 ```
 
-注意：主页和 reading 页面都需要通过上面的本地服务器预览，直接双击打开 HTML 文件会读不到 `.md` 文件。
+注意：reading 页面需要通过上面的本地服务器预览，直接双击打开 `reading.html` 会读不到 `reading.md`。
 
 ### 每天 23:00 自动发布（本机）
 
@@ -80,41 +78,42 @@ link: https://arxiv.org/abs/xxxx.xxxxx
 - `type` 是分类（paper / blog / book / talk / note…），筛选按钮按你用过的 type 自动生成；不写默认是 note。
 - 每条笔记都有自己的链接，例如 `https://yhli-ml.github.io/reading.html#标题转成的id`，展开后点右侧的 `#` 就能得到。
 
-## 改主页上的内容
+## 改主页上的其他内容
 
-主页的文字全部在 `home.md` 里，可以用 Typora 直接编辑。文件开头的注释里也有一份写法速查。
+`index.html` 里每一块都有一行醒目的注释，搜索下面的关键字就能找到：
 
-**板块**：每个「# 标题」是一个板块。普通段落、**加粗**、*斜体*、[链接](https://...)、列表照常写。
-
-| 写法 | 效果 |
+| 想改的内容 | 在 `index.html` 里搜索 |
 | --- | --- |
-| `==文字==` | 带底色的高亮（about 板块里的链接会自动高亮） |
-| 一行只有链接、用 ` · ` 隔开 | 一排圆角按钮（about 末尾那排） |
-| about 里以 `> currently` 开头的引用块 | 右侧那张 currently 小卡片，每行写 `名称: 内容` |
-| 正文里的 `(!)` | 自动显示成强调色 |
-| honors / service 列表里写 `左侧小字 · 内容` | 左侧小字显示在上方的灰色小标题 |
+| 顶部导航 | `<nav>` |
+| currently 卡片（地点、联系方式等） | `class="card currently"` |
+| about 的几段介绍 | `about ───` |
+| research interests | `interests ───` |
+| story 时间线（每一步一个 `<li class="step">`） | `story ───` |
+| 论文列表 | `publications ───` |
+| honors / service | `honors & service ───` |
 
-**时间线（the story so far）和论文列表（publications）**：每个「## 标题」是一条，标题下面紧跟几行属性，空一行后写正文。
+改文字时只动标签中间的内容就好，例如 `<p>这里的文字</p>`。几个常用写法：
 
-```markdown
-## 新的一步的标题
-venue: NeurIPS 2027 · first author
-paper: https://...
-code: https://...
-
-这一步的正文……
+```html
+<a class="hl" href="https://...">带底色的链接</a>
+<a href="https://...">普通链接</a>
+<strong>加粗</strong>   <em>斜体</em>
 ```
 
-| 属性 | 作用 |
-| --- | --- |
-| `venue:` | 时间线里标题下的小字；论文列表里是会议标签（写 under review 会显示成灰色） |
-| `paper:` / `code:` | 论文和代码链接。只写网址会显示默认文字；想自定义就写 `[自定义文字](网址)` |
-| `figure:` | 插入交互图：`complementary-labels` / `long-tail` / `kv-cache` |
-| `status: ongoing` | 编号圆圈显示为虚线，表示进行中 |
-| `note:` | 正文下面的一行灰色小字 |
-| `authors:` | 论文作者，用 `**Yuhang Li**` 标出自己，会显示成下划线 |
+**加一篇新论文**：在 `publications` 里复制一个 `<li>…</li>` 整块，改标题、作者、会议和链接：
 
-时间线的编号按顺序自动生成。**加一篇论文**：在 publications 下面复制一整条 `## …` 改内容即可。
+```html
+<li>
+  <div class="pub-title">Paper Title</div>
+  <div class="pub-authors"><u>Yuhang Li</u>, Coauthor, Advisor</div>
+  <div class="pub-venue"><span class="tag">NeurIPS 2027</span>
+    <a href="https://...">paper</a> ·
+    <a href="https://...">code</a></div>
+</li>
+```
+
+**在时间线里加一步**：复制一个 `<li class="step">…</li>`，把 `<span class="num">` 里的编号改掉；
+没有交互图的话，删掉里面的 `<figure class="demo">…</figure>` 即可。
 
 **更新简历**：简历 PDF 在另一个仓库 `yhli-ml/yhli-ml` 的 `resume/Yuhang_Li_Research_Resume.pdf`。
 用同名文件覆盖并 push，网站和 GitHub 主页上的 cv 链接会自动指向新版本。
