@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Yuhang Li</title>
-  <meta name="description" content="Yuhang Li — Ph.D. student at the University of Tokyo working on trustworthy machine learning: learning from imperfect data, evaluation with known answers, and the safety of multimodal models.">
+  <meta name="description" content="Yuhang Li — Ph.D. student at the University of Tokyo working on trustworthy machine learning: learning and reasoning from unreliable information.">
   <meta property="og:title" content="Yuhang Li">
-  <meta property="og:description" content="Ph.D. student at the University of Tokyo · trustworthy machine learning · imperfect data, evaluation, multimodal safety.">
+  <meta property="og:description" content="Ph.D. student at the University of Tokyo · trustworthy machine learning · learning from unreliable information.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232f2a24'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='17' font-weight='700' text-anchor='middle' fill='%23f7f3ea'%3Eyl%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,7 +41,7 @@
         <dl>
           <div><dt>location:</dt> <dd><span class="hl">Tokyo, Japan</span></dd></div>
           <div><dt>at:</dt> <dd><a class="hl" href="https://www.ms.k.u-tokyo.ac.jp/sugi/">Sugiyama Lab, UTokyo</a></dd></div>
-          <div><dt>thinking about:</dt> <dd><span class="hl">what a model really learns from the evidence it gets</span></dd></div>
+          <div><dt>thinking about:</dt> <dd><span class="hl">learning and reasoning with unreliable information</span></dd></div>
           <div><dt>contact:</dt> <dd><a class="hl" href="mailto:albertl06011@gmail.com">albertl06011@gmail.com</a></dd></div>
         </dl>
       </aside>
@@ -51,8 +51,8 @@
         <a class="hl" href="https://www.k.u-tokyo.ac.jp/en/">Graduate School of Frontier Sciences</a>,
         <a class="hl" href="https://www.u-tokyo.ac.jp/en/">The University of Tokyo</a>, advised by
         <a class="hl" href="https://www.ms.k.u-tokyo.ac.jp/sugi/">Prof. Masashi Sugiyama</a>.
-        My research is on <strong>trustworthy machine learning</strong>: what models actually learn from
-        imperfect evidence, and how to measure it honestly.
+        My research is on <strong>trustworthy machine learning</strong>, with a focus on learning and
+        reasoning from unreliable information.
         For a full list of my work, see my
         <a class="hl" href="https://scholar.google.com/citations?user=taHXmsoAAAAJ&amp;hl=en">Google Scholar profile</a>
         or scroll further down this page.
@@ -61,12 +61,6 @@
       <p>
         I have been selected for the <strong>JSPS DC1 Research Fellowship</strong> (FY2027) and
         <strong>BOOST NAIS</strong> at the University of Tokyo.
-      </p>
-
-      <p>
-        Currently, I am working on three things: grading models against answers that are known exactly, the
-        safety of multimodal assistants that can be steered by the images they read, and re-checking where the
-        reported gains in long-tailed learning really come from.
       </p>
 
       <p>
@@ -98,17 +92,18 @@
     <section id="interests">
       <h2>research interests</h2>
       <p>
-        My research goal is to understand what models really learn from imperfect evidence (noisy labels, a
-        handful of examples, an image they should not trust) and to measure it against answers we can check.
-        I prefer problems that have a real need behind them. I organize this around three pillars.
+        Data and feedback in the real world are rarely clean: labels are partial or wrong, classes are
+        imbalanced, and inputs can be manipulated. My research goal is to build models that can tell reliable
+        information from unreliable information, and evaluation methods that can verify whether they do.
+        I organize this around three pillars.
       </p>
       <ul class="pillars">
-        <li><strong>Learning from imperfect data</strong>: weak supervision, long-tailed and noisy labels,
-          and where the reported gains in these settings really come from.</li>
-        <li><strong>Evaluation with known answers</strong>: measuring models against a ground truth we can
-          compute, so we learn not just which model is better but what each one gets wrong.</li>
-        <li><strong>Safety and privacy of multimodal models</strong>: what an image can make a model do,
-          and how to defend against it.</li>
+        <li><strong>Weakly supervised and robust learning</strong>: learning from labels that are incomplete,
+          noisy, or long-tailed.</li>
+        <li><strong>Reliable evaluation</strong>: measuring model behavior, including uncertainty, against a
+          well-defined ground truth.</li>
+        <li><strong>Safety and privacy of foundation models</strong>: how models can be manipulated through
+          their inputs and memory, and how to protect them.</li>
       </ul>
     </section>
 
