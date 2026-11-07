@@ -18,11 +18,12 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="#about">Yuhang Li</a>
+    <a class="brand" href="./">Yuhang Li</a>
     <nav>
-      <a href="#about">about</a>
-      <a href="#story">research</a>
-      <a href="#publications">papers</a>
+      <a href="./#about">about</a>
+      <a href="./#story">research</a>
+      <a class="nav-papers" href="./#publications">papers</a>
+      <a href="reading.html">reading</a>
       <a href="https://github.com/yhli-ml/yhli-ml/blob/main/resume/Yuhang_Li_Research_Resume.pdf">cv</a>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
         <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.4 5.4 0 0 1-9.54-4.54A5.4 5.4 0 0 1 13.36 3.1C12.92 3.04 12.46 3 12 3Z"/></svg>
@@ -208,11 +209,17 @@
           <h3>Samples are not equal; head and tail cooperate</h3>
           <p class="venue">ICLR 2026 · co-author &nbsp;/&nbsp; under review · first student author</p>
           <p>
-            Two follow-ups on the same theme. In <em>deep clustering</em>, not every sample is equally useful
-            for training, and choosing which ones to learn from helps a lot. In <em>long-tailed partial-label learning</em>,
+            Two follow-ups on the same theme. In <em>deep clustering</em>, models tend to over-learn simple patterns in
+            dense regions of feature space. Our plug-in initializes the clustering head in a density-aware way and
+            <strong>dynamically selects samples</strong>, dropping ones that are already learned and focusing on unstable ones.
+            This improves clustering accuracy by up to 6.1% and speeds up training by up to 1.3×. In <em>long-tailed partial-label learning</em>,
             each example has a set of candidate labels and the classes are imbalanced, so I designed a
             <strong>head classifier and a tail classifier that cooperate</strong>. Each one handles the regime it is good at,
             so that ambiguity and imbalance do not amplify each other.
+          </p>
+          <p class="actions">
+            <a href="https://proceedings.iclr.cc/paper_files/paper/2026/file/63ef323523f3be8b58ed9277cc747485-Paper-Conference.pdf">read the ICLR 2026 paper →</a>
+            <a href="https://github.com/notoaudrey/Samples-Are-Not-Equal">code →</a>
           </p>
         </li>
 
@@ -316,7 +323,9 @@
         <li>
           <div class="pub-title">Samples Are Not Equal: A Sample Selection Approach for Deep Clustering</div>
           <div class="pub-authors">Zhengxing Jiao, Yaxin Hou, Jun Ma, <u>Yuhang Li</u>, Ding Ding, Yuheng Jia, Hui Liu, Junhui Hou</div>
-          <div class="pub-venue"><span class="tag">ICLR 2026</span></div>
+          <div class="pub-venue"><span class="tag">ICLR 2026</span>
+            <a href="https://proceedings.iclr.cc/paper_files/paper/2026/file/63ef323523f3be8b58ed9277cc747485-Paper-Conference.pdf">paper</a> ·
+            <a href="https://github.com/notoaudrey/Samples-Are-Not-Equal">code</a></div>
         </li>
         <li>
           <div class="pub-title">Robust Long-Tailed Partial Label Learning by Head Classifier and Tail Classifier Cooperation</div>
@@ -350,7 +359,7 @@
 
   <footer>
     <span>© <span id="year">2026</span> Yuhang Li</span>
-    <span>Tokyo · last updated Nov 2026</span>
+    <span>Tokyo · last updated <span id="updated">Nov 2026</span></span>
   </footer>
 
   <script src="script.js"></script>

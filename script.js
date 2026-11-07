@@ -12,7 +12,11 @@
     try { localStorage.setItem('theme', next); } catch (e) {}
   });
 
-  document.getElementById('year').textContent = new Date().getFullYear();
+  const yearEl = document.getElementById('year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+  const updEl = document.getElementById('updated');
+  const mod = new Date(document.lastModified);
+  if (updEl && !isNaN(mod)) updEl.textContent = mod.toLocaleDateString('en', { month: 'short', year: 'numeric' });
 
   /* ───────── hide / show figures ───────── */
   document.querySelectorAll('.demo .hide-btn').forEach(btn => {
@@ -28,7 +32,7 @@
   };
 
   /* ───────── 0 · complementary labels ───────── */
-  (() => {
+  if (document.getElementById('demo-cll')) (() => {
     const classes = ['airplane', 'bird', 'car', 'cat', 'deer', 'dog', 'horse', 'monkey', 'ship', 'truck'];
     const animals = new Set(['bird', 'cat', 'deer', 'dog', 'horse', 'monkey']);
     const close = [['cat', 'dog'], ['deer', 'horse'], ['car', 'truck'], ['airplane', 'ship'],
@@ -105,7 +109,7 @@
   })();
 
   /* ───────── 1 · long tail + noisy labels ───────── */
-  (() => {
+  if (document.getElementById('demo-lt')) (() => {
     const chart = document.getElementById('ltChart');
     const ratio = document.getElementById('ltRatio');
     const noise = document.getElementById('ltNoise');
@@ -160,7 +164,7 @@
   })();
 
   /* ───────── 4 · KV-cache prefetch timeline ───────── */
-  (() => {
+  if (document.getElementById('demo-kv')) (() => {
     const seg = document.querySelector('#demo-kv .seg');
     const el = id => document.getElementById(id);
     const kv = document.querySelector('#demo-kv .kv');
