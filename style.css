@@ -126,6 +126,7 @@ p { margin: 0 0 18px; }
 .step.future .num { border-style: dashed; }
 .venue { font: 500 12.5px var(--sans); color: var(--muted); margin: 4px 0 12px; letter-spacing: .01em; }
 .mark { font-weight: 700; color: var(--accent); }
+.mark.q { color: var(--accent-2); }
 .actions { display: flex; gap: 18px; font: 500 13.5px var(--sans); }
 
 /* ─────────────── demo figure ─────────────── */
@@ -261,34 +262,56 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 }
 .tag.muted-tag { color: var(--muted); font-weight: 500; }
 
-/* ─────────────── interests: principles ─────────────── */
-h3.sub { font: 600 12px var(--sans); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 26px 0 10px; }
-.principles { list-style: none; padding: 0; margin: 0; counter-reset: pr; }
-.principles li { counter-increment: pr; position: relative; padding-left: 28px; margin-bottom: 8px; color: var(--ink-2); }
-.principles li::before {
-  content: counter(pr); position: absolute; left: 0; top: .28em; width: 18px; height: 18px; border-radius: 50%;
-  border: 1px solid var(--rule); font: 600 10.5px/16px var(--sans); text-align: center; color: var(--accent);
+/* ─────────────── demo: image steering ─────────────── */
+.chat { display: flex; gap: 14px; align-items: flex-start; }
+.chat-img {
+  flex: none; width: 74px; height: 74px; border-radius: 8px; position: relative; overflow: hidden;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent-2) 55%, var(--bar-bg)), color-mix(in srgb, var(--good) 45%, var(--bar-bg)));
 }
-.mini { padding-left: 20px; margin: -6px 0 14px; font-size: 16px; }
-.mini li { margin-bottom: 8px; }
-.mini li::marker { color: var(--muted); }
+.chat-img::after {
+  content: ""; position: absolute; inset: 0; opacity: 0; transition: opacity .3s;
+  background: repeating-linear-gradient(45deg, color-mix(in srgb, var(--accent) 35%, transparent) 0 1px, transparent 1px 4px);
+}
+.chat-img.armed::after { opacity: .55; }
+.chat-col { flex: 1; min-width: 0; }
+.chat-asks { justify-content: flex-start; margin-bottom: 10px; }
+.chat-asks button { font-size: 11.5px; }
+.bubble { font: 14px/1.5 var(--sans); padding: 9px 12px; border-radius: 10px; margin-bottom: 8px; max-width: 92%; }
+.bubble.user { background: var(--ink); color: var(--bg); margin-left: auto; width: fit-content; border-bottom-right-radius: 3px; }
+.bubble.bot { background: var(--bar-bg); color: var(--ink); border-bottom-left-radius: 3px; min-height: 3em; }
+.bubble mark { background: color-mix(in srgb, var(--accent) 22%, transparent); color: var(--ink); padding: 0 2px; border-radius: 3px; }
 
 /* ─────────────── demo: ideal learner ─────────────── */
 .ev-q { font-size: 15px; text-align: center; margin: 0 0 12px; color: var(--ink-2); }
 .ev-q strong { color: var(--ink); }
-.ev-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; min-height: 26px; margin-bottom: 14px; }
-.ev-chips i {
-  font: 600 12px/22px var(--sans); font-style: normal; width: 22px; height: 22px; border-radius: 5px; text-align: center;
-}
+.ev-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; min-height: 22px; margin-bottom: 6px; }
+.ev-chips i { font: 600 11px/20px var(--sans); font-style: normal; width: 20px; height: 20px; border-radius: 4px; text-align: center; }
 .ev-chips i.hit { background: color-mix(in srgb, var(--good) 22%, transparent); color: var(--good); }
 .ev-chips i.miss { background: color-mix(in srgb, var(--bad) 20%, transparent); color: var(--bad); }
-.ev-chips .muted { font-size: 12px; line-height: 22px; }
-.ev-rows { margin: 4px 0 14px; }
-.ev-rows .kv-label { width: 120px; }
-.ev-fill { height: 100%; border-radius: 5px; transition: width .35s ease; }
-.ev-fill.ideal { background: var(--accent-2); }
-.ev-fill.model { background: var(--accent); }
-.ev-val { width: 42px; flex: none; font: 600 13px var(--sans); font-variant-numeric: tabular-nums; color: var(--ink); }
+.ev-chips i.new { animation: pop .25s ease-out; }
+@keyframes pop { from { transform: scale(.4); opacity: 0; } to { transform: none; opacity: 1; } }
+.ev-chart { display: block; width: 100%; height: auto; overflow: visible; }
+.ev-chart .grid { stroke: var(--rule); stroke-width: 1; }
+.ev-chart .prior { stroke: var(--muted); stroke-dasharray: 3 3; stroke-width: 1; }
+.ev-chart text { font: 9px var(--sans); fill: var(--muted); }
+.ev-chart .ln { fill: none; stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; }
+.ev-chart .ideal { stroke: var(--accent-2); } .ev-chart circle.ideal { fill: var(--accent-2); }
+.ev-chart .model { stroke: var(--accent); }  .ev-chart circle.model { fill: var(--accent); }
+.sw.ev-ideal { background: var(--accent-2); } .sw.ev-model { background: var(--accent); }
+.legend b { font-variant-numeric: tabular-nums; color: var(--ink); }
+
+/* ─────────────── demo: where gains come from ─────────────── */
+.controls.one { grid-template-columns: 1fr; }
+.gain { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; height: 150px; align-items: end; }
+.g-grp { display: flex; flex-direction: column; height: 100%; }
+.g-bars { flex: 1; display: flex; gap: 4px; align-items: flex-end; justify-content: center; }
+.g-bar { width: 38%; max-width: 26px; border-radius: 4px 4px 0 0; position: relative; transition: height .2s; }
+.g-bar span { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); font: 10px var(--sans); color: var(--muted); padding-bottom: 2px; font-variant-numeric: tabular-nums; }
+.g-bar.base { background: color-mix(in srgb, var(--muted) 55%, var(--bar-bg)); }
+.g-bar.new { background: var(--accent); }
+.g-name { font: 11.5px var(--sans); color: var(--ink-2); text-align: center; margin-top: 6px; border-top: 1px solid var(--rule); padding-top: 4px; }
+.g-grp.avg .g-name { font-weight: 600; color: var(--ink); }
+.sw.g-base { background: color-mix(in srgb, var(--muted) 55%, var(--bar-bg)); } .sw.g-new { background: var(--accent); }
 
 /* ─────────────── honors & service ─────────────── */
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 0 40px; }
@@ -394,7 +417,8 @@ footer {
   .two-col { grid-template-columns: 1fr; }
   .kv-label { width: 62px; font-size: 10.5px; }
   .kv-axis { margin-left: 74px; }
-  .ev-rows .kv-label { width: 76px; }
+  .chat-img { width: 44px; height: 44px; }
+  .gain { gap: 6px; }
 }
 @media (max-width: 440px) {
   .brand { font-size: 14px; white-space: nowrap; }

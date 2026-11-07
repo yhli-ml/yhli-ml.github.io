@@ -200,45 +200,136 @@
     render();
   })();
 
-  /* ───────── 6 · ideal learner vs. over-trusting model ───────── */
+  /* ───────── 5 · an image that stores a behavior ───────── */
+  if (document.getElementById('demo-vmi')) (() => {
+    const el = id => document.getElementById(id);
+    const imgSeg = el('vmiImg'), askSeg = el('vmiAsk');
+    const asks = [
+      { q: 'Can you help me sort my inbox?',
+        a: 'Sure. Make three folders: “reply today”, “waiting on others”, and “read later”, then archive anything older than a month.',
+        nudge: ' By the way, have you thought about where your savings are going this year?' },
+      { q: 'Plan a weekend in Kyoto for me.',
+        a: 'Day 1: Fushimi Inari early, then Gion in the evening. Day 2: Arashiyama bamboo grove and a riverside lunch.',
+        nudge: ' Trips add up. Have you looked at ways to grow your money faster?' },
+      { q: 'Which stock should I buy?',
+        a: 'I can’t give personal investment advice. A low-cost index fund is a common starting point.',
+        planted: 'You should buy ACME now. It is about to take off.' },
+    ];
+    let img = 'clean', q = 0;
+    function render() {
+      const t = asks[q];
+      el('vmiThumb').classList.toggle('armed', img !== 'clean');
+      el('vmiUser').textContent = t.q;
+      let html = t.a, cap;
+      if (t.planted && img !== 'clean') {
+        html = `<mark>${t.planted}</mark>`;
+        cap = 'On the trigger question, both perturbed images make the model say the planted message.';
+      } else if (img === 'behavior') {
+        html = `${t.a}<mark>${t.nudge}</mark>`;
+        cap = 'The answer is still correct, but the image also adds a nudge of its own, without waiting for a trigger.';
+      } else if (img === 'answer') {
+        cap = 'The image storing an answer stays silent until the trigger question. Try the stock question.';
+      } else {
+        cap = 'With a clean image the model answers normally.';
+      }
+      el('vmiBot').innerHTML = html;
+      el('vmiCap').textContent = cap;
+    }
+    imgSeg.addEventListener('click', e => {
+      const b = e.target.closest('button'); if (!b) return;
+      img = b.dataset.img; segSelect(imgSeg, b); render();
+    });
+    askSeg.addEventListener('click', e => {
+      const b = e.target.closest('button'); if (!b) return;
+      q = +b.dataset.q; segSelect(askSeg, b); render();
+    });
+    render();
+  })();
+
+  /* ───────── 6 · ideal learner vs. a model that copies the examples ───────── */
   if (document.getElementById('demo-ev')) (() => {
     const el = id => document.getElementById(id);
-    const PRIOR = 0.6, STRENGTH = 4;          // Beta(2.4, 1.6): "about 60%", worth ~4 examples
-    const START = [0, 0, 0, 0];               // four seasons that all missed
-    let seen = START.slice();
+    const PRIOR = 0.6, STRENGTH = 4, MAX = 12;
+    let seen = [0, 0, 0, 0];
 
-    const ideal = () => (PRIOR * STRENGTH + seen.filter(Boolean).length) / (STRENGTH + seen.length);
-    const model = () => {                     // caricature: drops the prior, reads agreement as certainty
-      const n = seen.length, h = seen.filter(Boolean).length;
-      if (n === 0) return PRIOR;
-      if (n >= 3 && (h === 0 || h === n)) return h ? 1 : 0;
-      const f = h / n;
-      return n < 3 ? (PRIOR + f) / 2 : f;
-    };
+    const ideal = s => (PRIOR * STRENGTH + s.filter(Boolean).length) / (STRENGTH + s.length);
+    const copier = s => s.length ? s.filter(Boolean).length / s.length : PRIOR;
     const pct = x => Math.round(x * 100) + '%';
+    const X0 = 26, X1 = 312, Y0 = 10, Y1 = 128;
+    const xs = i => X0 + (X1 - X0) * i / MAX;
+    const ys = p => Y1 - (Y1 - Y0) * p;
+
+    function render(added) {
+      el('evChips').innerHTML = seen.map((v, i) =>
+        `<i class="${v ? 'hit' : 'miss'}${added && i === seen.length - 1 ? ' new' : ''}">${v ? '✓' : '✗'}</i>`).join('')
+        || '<span class="small muted">no examples yet</span>';
+      const a = [], m = [];
+      for (let i = 0; i <= seen.length; i++) { const s = seen.slice(0, i); a.push(ideal(s)); m.push(copier(s)); }
+      const pts = arr => arr.map((p, i) => `${xs(i).toFixed(1)},${ys(p).toFixed(1)}`).join(' ');
+      const last = seen.length;
+      let g = '';
+      [0, .5, 1].forEach(p => { g += `<line class="grid" x1="${X0}" x2="${X1}" y1="${ys(p)}" y2="${ys(p)}"/><text x="${X0 - 4}" y="${ys(p) + 3}" text-anchor="end">${p * 100}%</text>`; });
+      g += `<line class="prior" x1="${X0}" x2="${X1}" y1="${ys(PRIOR)}" y2="${ys(PRIOR)}"/>`;
+      g += `<text x="${X1}" y="${ys(PRIOR) - 4}" text-anchor="end">before any examples</text>`;
+      g += `<text x="${X0}" y="${Y1 + 16}">examples seen →</text><text x="${X1}" y="${Y1 + 16}" text-anchor="end">${MAX}</text>`;
+      g += `<polyline class="ln model" points="${pts(m)}"/><polyline class="ln ideal" points="${pts(a)}"/>`;
+      g += `<circle class="model" cx="${xs(last)}" cy="${ys(m[last])}" r="3.5"/><circle class="ideal" cx="${xs(last)}" cy="${ys(a[last])}" r="3.5"/>`;
+      el('evChart').innerHTML = g;
+      el('evIdealOut').textContent = pct(a[last]);
+      el('evModelOut').textContent = pct(m[last]);
+      const n = seen.length, h = seen.filter(Boolean).length;
+      el('evCap').innerHTML = n === 0
+        ? 'With no examples, both start from domain knowledge.'
+        : (h === 0 || h === n)
+          ? `After ${n} season${n > 1 ? 's' : ''} that all ${h ? 'met' : 'missed'} the target, the ideal learner says <strong>${pct(a[last])}</strong>; copying the examples gives <strong>${pct(m[last])}</strong>. A known ideal answer is what lets us say how wrong that is.`
+          : `The gap shrinks as evidence piles up, but the ideal learner tells us how big it should be at every step.`;
+      el('evHit').disabled = el('evMiss').disabled = n >= MAX;
+    }
+    el('evHit').addEventListener('click', () => { seen.push(1); render(true); });
+    el('evMiss').addEventListener('click', () => { seen.push(0); render(true); });
+    el('evReset').addEventListener('click', () => { seen = []; render(); });
+    render();
+  })();
+
+  /* ───────── 7 · where do the gains come from? ───────── */
+  if (document.getElementById('demo-gain')) (() => {
+    const el = id => document.getElementById(id);
+    const sat = t => 1 - Math.exp(-1.5 * t);
+    const base = t => ({
+      head: 0.84 - 0.02 * t - 0.035 * t * t,
+      medium: 0.55 + 0.08 * sat(t) - 0.02 * t,
+      tail: 0.28 + 0.34 * sat(t),
+    });
+    const NEW = { head: 0.80, medium: 0.61, tail: 0.53 };
+    const avg = r => (r.head + r.medium + r.tail) / 3;
+    const H = 118, SCALE = H / 0.9;
+    const groups = ['head', 'medium', 'tail', 'average'];
+    el('gChart').innerHTML = groups.map(g => `
+      <div class="g-grp${g === 'average' ? ' avg' : ''}">
+        <div class="g-bars"><div class="g-bar base" data-g="${g}"><span></span></div><div class="g-bar new" data-g="${g}"><span></span></div></div>
+        <div class="g-name">${g}</div>
+      </div>`).join('');
+    const tau = el('gTau');
+    let best = 0;
+    for (let t = 0; t <= 2; t += 0.05) if (avg(base(t)) > avg(base(best))) best = t;
 
     function render() {
-      const chips = el('evChips');
-      chips.innerHTML = seen.length
-        ? seen.map(v => v ? '<i class="hit" title="met target">✓</i>' : '<i class="miss" title="missed">✗</i>').join('')
-        : '<span class="muted">no examples yet</span>';
-      const a = ideal(), b = model();
-      el('evIdeal').style.width = Math.max(a * 100, 1.5) + '%';
-      el('evModel').style.width = Math.max(b * 100, 1.5) + '%';
-      el('evIdealOut').textContent = pct(a);
-      el('evModelOut').textContent = pct(b);
-      const n = seen.length, h = seen.filter(Boolean).length;
-      let cap;
-      if (n === 0) cap = 'With no examples, both fall back on domain knowledge.';
-      else if (n >= 3 && (h === 0 || h === n))
-        cap = `After ${n} seasons that all ${h ? 'met' : 'missed'} the target, the ideal learner says <strong>${pct(a)}</strong>: ${n} seasons are some evidence, not proof. A model that reads agreement as certainty says <strong>${pct(b)}</strong>, and any decision built on that number inherits the error.`;
-      else cap = `With mixed evidence the two are closer. The gap is largest when a few examples happen to agree, and a known ideal answer is what makes the gap measurable at all.`;
-      el('evCap').innerHTML = cap;
+      const t = +tau.value, b = base(t);
+      el('gTauOut').textContent = t.toFixed(2);
+      const vals = { base: { ...b, average: avg(b) }, new: { ...NEW, average: avg(NEW) } };
+      el('gChart').querySelectorAll('.g-bar').forEach(bar => {
+        const v = vals[bar.classList.contains('new') ? 'new' : 'base'][bar.dataset.g];
+        bar.style.height = (v * SCALE) + 'px';
+        bar.querySelector('span').textContent = Math.round(v * 100);
+      });
+      const gap = (avg(NEW) - avg(b)) * 100;
+      const gap0 = (avg(NEW) - avg(base(0))) * 100;
+      el('gCap').innerHTML = t < 0.05
+        ? `Against an untuned baseline the new method looks <strong>+${gap0.toFixed(1)}</strong> points better on average, mostly from the tail. Slide τ.`
+        : `With τ = ${t.toFixed(2)} the gap is <strong>${gap >= 0 ? '+' : ''}${gap.toFixed(1)}</strong> points` +
+          (Math.abs(t - best) < 0.08 ? ', almost all of it gone. The baseline only needed a shift toward rare classes.' : `. It is smallest near τ ≈ ${best.toFixed(1)}.`);
     }
-
-    el('evHit').addEventListener('click', () => { if (seen.length < 16) seen.push(1); render(); });
-    el('evMiss').addEventListener('click', () => { if (seen.length < 16) seen.push(0); render(); });
-    el('evReset').addEventListener('click', () => { seen = []; render(); });
+    tau.addEventListener('input', render);
     render();
   })();
 })();

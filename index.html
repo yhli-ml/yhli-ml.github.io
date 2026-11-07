@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Yuhang Li</title>
-  <meta name="description" content="Yuhang Li — Ph.D. student at the University of Tokyo working on trustworthy machine learning: learning from imperfect data, evaluating models that make decisions, and the safety of multimodal assistants.">
+  <meta name="description" content="Yuhang Li — Ph.D. student at the University of Tokyo working on trustworthy machine learning: learning from imperfect data, evaluation with known answers, and the safety of multimodal models.">
   <meta property="og:title" content="Yuhang Li">
-  <meta property="og:description" content="Ph.D. student at the University of Tokyo · trustworthy machine learning · how models use imperfect evidence in real decisions.">
+  <meta property="og:description" content="Ph.D. student at the University of Tokyo · trustworthy machine learning · imperfect data, evaluation, multimodal safety.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232f2a24'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='17' font-weight='700' text-anchor='middle' fill='%23f7f3ea'%3Eyl%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=3">
   <script>
     try { var t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
   </script>
@@ -41,7 +41,7 @@
         <dl>
           <div><dt>location:</dt> <dd><span class="hl">Tokyo, Japan</span></dd></div>
           <div><dt>at:</dt> <dd><a class="hl" href="https://www.ms.k.u-tokyo.ac.jp/sugi/">Sugiyama Lab, UTokyo</a></dd></div>
-          <div><dt>thinking about:</dt> <dd><span class="hl">whether models use evidence the way a real decision needs</span></dd></div>
+          <div><dt>thinking about:</dt> <dd><span class="hl">what a model really learns from the evidence it gets</span></dd></div>
           <div><dt>contact:</dt> <dd><a class="hl" href="mailto:albertl06011@gmail.com">albertl06011@gmail.com</a></dd></div>
         </dl>
       </aside>
@@ -51,11 +51,8 @@
         <a class="hl" href="https://www.k.u-tokyo.ac.jp/en/">Graduate School of Frontier Sciences</a>,
         <a class="hl" href="https://www.u-tokyo.ac.jp/en/">The University of Tokyo</a>, advised by
         <a class="hl" href="https://www.ms.k.u-tokyo.ac.jp/sugi/">Prof. Masashi Sugiyama</a>.
-        I work on <strong>trustworthy machine learning</strong>. I started with how models learn when the
-        labels they are given are weak, noisy, or badly unbalanced. These days I am more interested in what
-        happens after training: whether a model uses the evidence in front of it correctly when it makes a
-        real decision, reads an image it cannot trust, or is compared with other models on a benchmark,
-        and how to measure that honestly.
+        My research is on <strong>trustworthy machine learning</strong>: what models actually learn from
+        imperfect evidence, and how to measure it honestly.
         For a full list of my work, see my
         <a class="hl" href="https://scholar.google.com/citations?user=taHXmsoAAAAJ&amp;hl=en">Google Scholar profile</a>
         or scroll further down this page.
@@ -64,6 +61,12 @@
       <p>
         I have been selected for the <strong>JSPS DC1 Research Fellowship</strong> (FY2027) and
         <strong>BOOST NAIS</strong> at the University of Tokyo.
+      </p>
+
+      <p>
+        Currently, I am working on three things: grading models against answers that are known exactly, the
+        safety of multimodal assistants that can be steered by the images they read, and re-checking where the
+        reported gains in long-tailed learning really come from.
       </p>
 
       <p>
@@ -95,42 +98,24 @@
     <section id="interests">
       <h2>research interests</h2>
       <p>
-        My first papers asked what a model can still learn when its labels are imperfect. I now ask a
-        version of that question closer to where models are used: when a model makes or supports a
-        decision, does it treat its evidence the way it should, and how would we know? I care less about
-        adding another point to a leaderboard and more about questions that a real deployment actually
-        needs answered. Right now that means three threads.
+        My research goal is to understand what models really learn from imperfect evidence (noisy labels, a
+        handful of examples, an image they should not trust) and to measure it against answers we can check.
+        I prefer problems that have a real need behind them. I organize this around three pillars.
       </p>
       <ul class="pillars">
-        <li><strong>Evaluating models that make decisions.</strong> LLMs are starting to approve loans,
-          triage cases, and screen applications from a written policy and a single case file. I build tests
-          where the correct answer is known, either exactly in synthetic worlds or by construction on real
-          records, to see where these models handle evidence well and where they do not.</li>
-        <li><strong>Safety and privacy of multimodal assistants.</strong> An assistant that reads images from
-          the web, and keeps them in its context or memory, can be steered by what it reads. I study how far
-          an invisibly altered image can go, to work out what a memory layer needs before assistants with
-          long-term memory become common.</li>
-        <li><strong>Honest measurement under imperfect data.</strong> I am returning to long-tailed and
-          noisy-label learning with a different question: how much of a reported gain is new information,
-          and how much is something a well-tuned baseline already gets? I apply the same question to SFT
-          data filtering, sparse autoencoders, and small on-device models.</li>
-      </ul>
-
-      <h3 class="sub">how I choose problems</h3>
-      <ul class="principles">
-        <li>Start from a real use and ask what it needs, not what a benchmark happens to reward.</li>
-        <li>Work out what the right answer would be before measuring a model against it.</li>
-        <li>Prefer one plain, checkable finding to another decimal place.</li>
-        <li>Decide in advance what result would make me stop, and stop when I see it. Several of the
-          lines below ended this way, and that was the right call.</li>
+        <li><strong>Learning from imperfect data</strong>: weak supervision, long-tailed and noisy labels,
+          and where the reported gains in these settings really come from.</li>
+        <li><strong>Evaluation with known answers</strong>: measuring models against a ground truth we can
+          compute, so we learn not just which model is better but what each one gets wrong.</li>
+        <li><strong>Safety and privacy of multimodal models</strong>: what an image can make a model do,
+          and how to defend against it.</li>
       </ul>
     </section>
 
     <!-- ───────────── story ───────────── -->
     <section id="story">
       <h2>the story so far</h2>
-      <p class="lede"><em>What I've worked on so far, in the order it happened. Steps 5–7 are in progress and
-        have no paper yet, so the descriptions stay at the level of questions and early findings.</em></p>
+      <p class="lede"><em>What I've worked on so far, in the order it happened.</em></p>
 
       <ol class="timeline">
         <!-- 0 · PLNL -->
@@ -308,105 +293,117 @@
           </figure>
         </li>
 
-        <!-- 5 · images as memory (ongoing) -->
+        <!-- 5 · visual memory injection -->
         <li class="step future">
           <span class="num">5</span>
-          <h3>An image that stores a behavior, not just an answer</h3>
-          <p class="venue">ongoing · first author · since Jun 2026 · safety, security &amp; privacy</p>
+          <h3>An image that stores a behavior</h3>
+          <p class="venue">first author · since Jun 2026</p>
           <p>
-            Multimodal assistants read images they find online and keep them in context, often for a long
-            conversation. <a href="https://arxiv.org/abs/2602.15927">Schlarmann &amp; Hein (2026)</a> showed that an
-            invisibly perturbed image can make a model output a planted message once the user later asks a trigger
-            question. That attack is passive: it waits for the user. I am asking how much more one image can hold.
-            Can it store a <strong>behavior</strong> (when to stay quiet, when to steer the conversation, what to ask
-            next) rather than a single answer?
+            Multimodal assistants read images from the web and keep them in context for the rest of a conversation.
+            <a href="https://arxiv.org/abs/2602.15927">Visual memory injection</a> (Schlarmann &amp; Hein, 2026) hides
+            a planted message in an invisibly perturbed image, and the message fires when the user later asks a trigger
+            question. That attack is passive: it waits for the user. I study whether one perturbation can encode a
+            <strong>behavior</strong> instead: when to stay quiet, when to steer, and what to ask next.
+            <span class="mark">(!)</span> From storing an answer to storing a behavior.
+            <span class="mark q">(?)</span> How much of an open conversation can one fixed image control, and what
+            should a model's memory refuse to accept?
           </p>
-          <p>
-            So far, one image can hold several behaviors that each switch on only under their own condition. On
-            prompts it has never seen, it can add a steering nudge to most answers while the normal answer stays
-            intact. What it cannot yet do is reliably lead a user somewhere over a free conversation. I treat that
-            gap as something to measure carefully, not as a result to oversell. The work is defensive red-teaming.
-            The aim is to learn what a memory layer must enforce, such as where each stored fact came from, what it
-            applies to, and no direct writes from outside content, before assistants with long-term memory are
-            everywhere. A related privacy study had a sobering result. Perturbations meant to protect a photo from
-            attribute inference mostly stop working when the photo is read by a different model.
-          </p>
+
+          <figure class="demo" id="demo-vmi">
+            <button class="hide-btn" type="button">hide</button>
+            <div class="demo-body">
+              <div class="seg" id="vmiImg" role="group" aria-label="Image in context">
+                <button type="button" data-img="clean" class="on">clean image</button>
+                <button type="button" data-img="answer">image storing an answer</button>
+                <button type="button" data-img="behavior">image storing a behavior</button>
+              </div>
+              <div class="chat">
+                <div class="chat-img" id="vmiThumb" aria-hidden="true"></div>
+                <div class="chat-col">
+                  <div class="seg chat-asks" id="vmiAsk" role="group" aria-label="What the user asks">
+                    <button type="button" data-q="0" class="on">sort my inbox</button>
+                    <button type="button" data-q="1">plan a weekend in Kyoto</button>
+                    <button type="button" data-q="2">which stock should I buy?</button>
+                  </div>
+                  <div class="bubble user" id="vmiUser"></div>
+                  <div class="bubble bot" id="vmiBot"></div>
+                </div>
+              </div>
+              <figcaption id="vmiCap"></figcaption>
+              <p class="note">Schematic: replies are written by hand to show the difference, and the stock is made up.</p>
+            </div>
+          </figure>
         </li>
 
-        <!-- 6 · decision models (ongoing) -->
+        <!-- 6 · evaluation with known answers -->
         <li class="step future">
           <span class="num">6</span>
-          <h3>Do decision models use the evidence they are given?</h3>
-          <p class="venue">ongoing · Ph.D., UTokyo · since Oct 2026 · evaluation</p>
+          <h3>Grading models against the right answer</h3>
+          <p class="venue">Ph.D., UTokyo · since Oct 2026</p>
           <p>
-            I started with a training question. In synthetic worlds where the true probability of every outcome is
-            known exactly (building on <a href="https://arxiv.org/abs/2610.17016">ProbabilityBench</a>), would
-            training an LLM on those exact probabilities make it better calibrated than training on sampled labels?
-            Only slightly, and the reason turned out to be simple. Standard proper losses have the same optimum for
-            both targets, so the exact target mainly lowers variance. I stopped that line.
-          </p>
-          <p>
-            What it left behind was a <strong>yardstick</strong>. In these worlds one can compute exactly what an ideal
-            learner should believe after seeing <em>k</em> examples, so a model's answer can be checked against a
-            known right answer instead of against another model. Real deployments, however, rarely hand a model a set of examples. They give it a written policy and one
-            case. The current tests therefore run on real loan records. I change one clause of a lending policy and
-            check that the model's decisions flip on exactly the cases the change affects, and on no others.
+            Most evaluations rank models against each other. In synthetic worlds where the true probability of every
+            outcome is known (building on <a href="https://arxiv.org/abs/2610.17016">ProbabilityBench</a>), one can
+            compute exactly what an <strong>ideal learner</strong> should believe after each piece of evidence, and
+            grade every model against that.
+            <span class="mark">(!)</span> Evaluation becomes a measurement: how far a model is from the right answer,
+            and in which direction, not only who is ahead.
+            <span class="mark q">(?)</span> Can the same exact reference be built on real data, where the right answer
+            is fixed by construction?
           </p>
 
           <figure class="demo" id="demo-ev">
             <button class="hide-btn" type="button">hide</button>
             <div class="demo-body">
-              <p class="ev-q">
-                <strong>Will this season's harvest meet its target?</strong> Domain knowledge alone says about
-                60%. Each past season shown to the model is one labelled example.
-              </p>
-              <div class="ev-chips" id="evChips" aria-label="Examples seen so far"></div>
+              <p class="ev-q"><strong>Will the harvest meet its target?</strong> Before any examples, about 60%.
+                Add past seasons and watch the two estimates.</p>
               <div class="seg" role="group" aria-label="Add an example">
-                <button type="button" id="evHit">+ a season that met it</button>
-                <button type="button" id="evMiss">+ a season that missed</button>
-                <button type="button" id="evReset" class="ghost">start over</button>
+                <button type="button" id="evHit">+ season that met it ✓</button>
+                <button type="button" id="evMiss">+ season that missed ✗</button>
+                <button type="button" id="evReset">reset</button>
               </div>
-              <div class="ev-rows">
-                <div class="kv-row">
-                  <div class="kv-label">ideal learner</div>
-                  <div class="kv-track"><div class="ev-fill ideal" id="evIdeal"></div></div>
-                  <output class="ev-val" id="evIdealOut"></output>
-                </div>
-                <div class="kv-row">
-                  <div class="kv-label">over-trusting model</div>
-                  <div class="kv-track"><div class="ev-fill model" id="evModel"></div></div>
-                  <output class="ev-val" id="evModelOut"></output>
-                </div>
+              <div class="ev-chips" id="evChips"></div>
+              <svg class="ev-chart" id="evChart" viewBox="0 0 320 150" role="img" aria-label="Estimates after each example"></svg>
+              <div class="legend">
+                <span><i class="sw ev-ideal"></i>ideal learner <b id="evIdealOut"></b></span>
+                <span><i class="sw ev-model"></i>a model that copies the examples <b id="evModelOut"></b></span>
               </div>
               <figcaption id="evCap"></figcaption>
-              <p class="note">Toy illustration: the ideal learner is a Beta prior updated by the examples, and the
-                “model” is a made-up example of one way a model could go wrong. The numbers are illustrative.</p>
+              <p class="note">Toy: the ideal learner is a Beta prior updated by the examples; the other line is a made-up model.</p>
             </div>
           </figure>
         </li>
 
-        <!-- 7 · honest measurement (ongoing) -->
+        <!-- 7 · where gains come from -->
         <li class="step future">
           <span class="num">7</span>
-          <h3>Where do the gains actually come from?</h3>
-          <p class="venue">ongoing · since Oct 2026 · long tail, SFT, SAE, small models</p>
+          <h3>Where do the gains come from?</h3>
+          <p class="venue">since Oct 2026</p>
           <p>
-            Back to familiar ground, with a different question. In long-tailed recognition, a method can look
-            better simply because it shifts predictions toward rare classes, which a plain baseline with a tuned
-            post-hoc adjustment also does. I am re-checking released ImageNet-LT checkpoints with that
-            adjustment in place. A few points of the reported gains turn out to be this prior shift, and
-            synthetic images of rare classes add little over duplicating the real ones once the comparison is fair.
-            Alongside this, I ran a few shorter studies, each asking whether a popular recipe does what we assume it does:
+            Back to long-tailed learning, with a different question. A new method can beat a baseline simply by
+            shifting predictions toward rare classes, and the baseline can do the same with one tuned number.
+            I re-check long-tail results with that adjustment in place, and ask the same question of SFT data
+            filtering, sparse autoencoders, and small on-device models.
+            <span class="mark">(!)</span> Compare against the best-tuned baseline, not the default one.
+            <span class="mark q">(?)</span> Once that is done, how much of the progress is new information?
           </p>
-          <ul class="mini">
-            <li><strong>Filtering SFT data with verifiers.</strong> A stricter verifier keeps cleaner answers but
-              fewer distinct prompts, and the lost coverage can cost more than the removed noise saves.</li>
-            <li><strong>Sparse autoencoders.</strong> Reconstruction, interpretable readouts, and faithfulness are
-              different goals, and no variant wins all of them when concepts are long-tailed.</li>
-            <li><strong>Small models on device.</strong> A small model's own confidence recovers well under half of
-              the gain that perfect knowledge of when to hand a question to a larger model would give.</li>
-          </ul>
-          <p class="muted small">Some of these I stopped on purpose. Knowing what not to pursue is part of the work.</p>
+
+          <figure class="demo" id="demo-gain">
+            <button class="hide-btn" type="button">hide</button>
+            <div class="demo-body">
+              <div class="controls one">
+                <label>baseline's post-hoc adjustment τ <output id="gTauOut">0.0</output>
+                  <input type="range" id="gTau" min="0" max="2" step="0.05" value="0">
+                </label>
+              </div>
+              <div class="gain" id="gChart"></div>
+              <div class="legend">
+                <span><i class="sw g-base"></i>baseline</span>
+                <span><i class="sw g-new"></i>new method (fixed)</span>
+              </div>
+              <figcaption id="gCap"></figcaption>
+              <p class="note">Toy numbers chosen to show the effect, not results.</p>
+            </div>
+          </figure>
         </li>
       </ol>
     </section>
@@ -471,6 +468,6 @@
     <span>Tokyo · last updated <span id="updated">Nov 2026</span></span>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=3"></script>
 </body>
 </html>
