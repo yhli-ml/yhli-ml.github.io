@@ -39,6 +39,21 @@ git push
 
 注意：reading 页面需要通过上面的本地服务器预览，直接双击打开 `reading.html` 会读不到 `reading.md`。
 
+### 每天 23:00 自动发布（本机）
+
+这台 Mac 上设置了一个定时任务：**每天 23:00** 自动把本地仓库里的所有改动 commit 并 push。
+所以在本地改完可以不用管，当晚会自动上线；想马上发布的话，照常手动 push 即可。
+
+- 它会先同步 GitHub 网页上做过的改动；如果两边改了同一处导致冲突，它会放弃这次 push，
+  你需要手动运行 `git pull --rebase` 解决。
+- **到点时所有未提交的改动都会公开**，写到一半、还不想发布的内容，请先放在仓库外面。
+- 如果 23:00 时 Mac 在睡眠，会在唤醒后补跑一次；关机时则跳过当天。
+- 运行记录：`~/Library/Logs/yhli-site-autopush.log`
+- 脚本：`~/.local/bin/yhli-site-autopush.sh`；定时配置：`~/Library/LaunchAgents/io.github.yhli-ml.site-autopush.plist`
+- 立即手动运行一次：`launchctl kickstart gui/$(id -u)/io.github.yhli-ml.site-autopush`
+- 关闭：`launchctl bootout gui/$(id -u)/io.github.yhli-ml.site-autopush`，然后删除上面的 plist 文件。
+- 改时间：编辑 plist 里的 `Hour` / `Minute`，再先 bootout、后 `launchctl bootstrap gui/$(id -u) <plist 路径>`。
+
 ### 3. 让 Claude 改
 
 直接说「在 reading 里加一条关于 XXX 的笔记」或者「把 about 第二段改成……」即可。
