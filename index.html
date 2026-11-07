@@ -312,7 +312,7 @@
         <li class="step future">
           <span class="num">5</span>
           <h3>An image that stores a behavior, not just an answer</h3>
-          <p class="venue">ongoing · since Jun 2026 · safety, security &amp; privacy</p>
+          <p class="venue">ongoing · first author · since Jun 2026 · safety, security &amp; privacy</p>
           <p>
             Multimodal assistants read images they find online and keep them in context, often for a long
             conversation. <a href="https://arxiv.org/abs/2602.15927">Schlarmann &amp; Hein (2026)</a> showed that an
@@ -347,10 +347,8 @@
           </p>
           <p>
             What it left behind was a <strong>yardstick</strong>. In these worlds one can compute exactly what an ideal
-            learner should believe after seeing <em>k</em> examples, and compare any model to that. Commercial decision
-            models turn out to use only part of the information in the examples. Some jump to certainty after a few
-            examples that happen to agree, and model rankings reorder depending on how much evidence they get.
-            Real deployments, however, rarely hand a model a set of examples. They give it a written policy and one
+            learner should believe after seeing <em>k</em> examples, so a model's answer can be checked against a
+            known right answer instead of against another model. Real deployments, however, rarely hand a model a set of examples. They give it a written policy and one
             case. The current tests therefore run on real loan records. I change one clause of a lending policy and
             check that the model's decisions flip on exactly the cases the change affects, and on no others.
           </p>
@@ -382,7 +380,7 @@
               </div>
               <figcaption id="evCap"></figcaption>
               <p class="note">Toy illustration: the ideal learner is a Beta prior updated by the examples, and the
-                “model” is a caricature of one failure mode seen in the project. The numbers are illustrative.</p>
+                “model” is a made-up example of one way a model could go wrong. The numbers are illustrative.</p>
             </div>
           </figure>
         </li>
