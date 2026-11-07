@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Yuhang Li</title>
-  <meta name="description" content="Yuhang Li — Ph.D. student at the University of Tokyo working on trustworthy machine learning and foundation models.">
+  <meta name="description" content="Yuhang Li — Ph.D. student at the University of Tokyo working on trustworthy machine learning: learning from imperfect data, evaluating models that make decisions, and the safety of multimodal assistants.">
   <meta property="og:title" content="Yuhang Li">
-  <meta property="og:description" content="Ph.D. student at the University of Tokyo · trustworthy machine learning and foundation models.">
+  <meta property="og:description" content="Ph.D. student at the University of Tokyo · trustworthy machine learning · how models use imperfect evidence in real decisions.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232f2a24'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='17' font-weight='700' text-anchor='middle' fill='%23f7f3ea'%3Eyl%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,7 +41,7 @@
         <dl>
           <div><dt>location:</dt> <dd><span class="hl">Tokyo, Japan</span></dd></div>
           <div><dt>at:</dt> <dd><a class="hl" href="https://www.ms.k.u-tokyo.ac.jp/sugi/">Sugiyama Lab, UTokyo</a></dd></div>
-          <div><dt>thinking about:</dt> <dd><span class="hl">reliable learning from imperfect labels</span></dd></div>
+          <div><dt>thinking about:</dt> <dd><span class="hl">whether models use evidence the way a real decision needs</span></dd></div>
           <div><dt>contact:</dt> <dd><a class="hl" href="mailto:albertl06011@gmail.com">albertl06011@gmail.com</a></dd></div>
         </dl>
       </aside>
@@ -51,8 +51,11 @@
         <a class="hl" href="https://www.k.u-tokyo.ac.jp/en/">Graduate School of Frontier Sciences</a>,
         <a class="hl" href="https://www.u-tokyo.ac.jp/en/">The University of Tokyo</a>, advised by
         <a class="hl" href="https://www.ms.k.u-tokyo.ac.jp/sugi/">Prof. Masashi Sugiyama</a>.
-        I study <strong>trustworthy machine learning and foundation models</strong>: how to make models
-        that keep working when the supervision they are given is weak, noisy, or badly unbalanced.
+        I work on <strong>trustworthy machine learning</strong>. I started with how models learn when the
+        labels they are given are weak, noisy, or badly unbalanced. These days I am more interested in what
+        happens after training: whether a model uses the evidence in front of it correctly when it makes a
+        real decision, reads an image it cannot trust, or is compared with other models on a benchmark,
+        and how to measure that honestly.
         For a full list of my work, see my
         <a class="hl" href="https://scholar.google.com/citations?user=taHXmsoAAAAJ&amp;hl=en">Google Scholar profile</a>
         or scroll further down this page.
@@ -92,24 +95,42 @@
     <section id="interests">
       <h2>research interests</h2>
       <p>
-        Real-world labels are rarely clean, complete, or balanced. My goal is to understand what a model
-        can still learn reliably from such data, and to carry those guarantees over to foundation models.
-        I organize this around three threads.
+        My first papers asked what a model can still learn when its labels are imperfect. I now ask a
+        version of that question closer to where models are used: when a model makes or supports a
+        decision, does it treat its evidence the way it should, and how would we know? I care less about
+        adding another point to a leaderboard and more about questions that a real deployment actually
+        needs answered. Right now that means three threads.
       </p>
       <ul class="pillars">
-        <li><strong>Weak supervision</strong>: learning when labels only say what something is <em>not</em>, or
-          give a set of possible answers instead of one (complementary and partial-label learning).</li>
-        <li><strong>Robustness to imperfect data</strong>: long-tailed class distributions and noisy labels,
-          especially when the two occur together and the rare classes are the ones most corrupted.</li>
-        <li><strong>Reliable foundation models</strong>: bringing these ideas to large pretrained models, from
-          how they are adapted to how they are served efficiently.</li>
+        <li><strong>Evaluating models that make decisions.</strong> LLMs are starting to approve loans,
+          triage cases, and screen applications from a written policy and a single case file. I build tests
+          where the correct answer is known, either exactly in synthetic worlds or by construction on real
+          records, to see where these models handle evidence well and where they do not.</li>
+        <li><strong>Safety and privacy of multimodal assistants.</strong> An assistant that reads images from
+          the web, and keeps them in its context or memory, can be steered by what it reads. I study how far
+          an invisibly altered image can go, to work out what a memory layer needs before assistants with
+          long-term memory become common.</li>
+        <li><strong>Honest measurement under imperfect data.</strong> I am returning to long-tailed and
+          noisy-label learning with a different question: how much of a reported gain is new information,
+          and how much is something a well-tuned baseline already gets? I apply the same question to SFT
+          data filtering, sparse autoencoders, and small on-device models.</li>
+      </ul>
+
+      <h3 class="sub">how I choose problems</h3>
+      <ul class="principles">
+        <li>Start from a real use and ask what it needs, not what a benchmark happens to reward.</li>
+        <li>Work out what the right answer would be before measuring a model against it.</li>
+        <li>Prefer one plain, checkable finding to another decimal place.</li>
+        <li>Decide in advance what result would make me stop, and stop when I see it. Several of the
+          lines below ended this way, and that was the right call.</li>
       </ul>
     </section>
 
     <!-- ───────────── story ───────────── -->
     <section id="story">
       <h2>the story so far</h2>
-      <p class="lede"><em>What I've worked on so far, in the order it happened.</em></p>
+      <p class="lede"><em>What I've worked on so far, in the order it happened. Steps 5–7 are in progress and
+        have no paper yet, so the descriptions stay at the level of questions and early findings.</em></p>
 
       <ol class="timeline">
         <!-- 0 · PLNL -->
@@ -287,17 +308,107 @@
           </figure>
         </li>
 
-        <!-- 5 · PhD -->
+        <!-- 5 · images as memory (ongoing) -->
         <li class="step future">
           <span class="num">5</span>
-          <h3>Toward trustworthy foundation models</h3>
-          <p class="venue">The University of Tokyo · Oct 2026 –</p>
+          <h3>An image that stores a behavior, not just an answer</h3>
+          <p class="venue">ongoing · since Jun 2026 · safety, security &amp; privacy</p>
           <p>
-            The thread connecting all of the above: models should behave predictably when their supervision is imperfect,
-            and they should be practical to deploy. My Ph.D. with Prof. Sugiyama aims to make weakly supervised and robust
-            learning work for foundation models, with both principled guarantees and real systems.
+            Multimodal assistants read images they find online and keep them in context, often for a long
+            conversation. <a href="https://arxiv.org/abs/2602.15927">Schlarmann &amp; Hein (2026)</a> showed that an
+            invisibly perturbed image can make a model output a planted message once the user later asks a trigger
+            question. That attack is passive: it waits for the user. I am asking how much more one image can hold.
+            Can it store a <strong>behavior</strong> (when to stay quiet, when to steer the conversation, what to ask
+            next) rather than a single answer?
           </p>
-          <p class="muted small">no dedicated paper yet</p>
+          <p>
+            So far, one image can hold several behaviors that each switch on only under their own condition. On
+            prompts it has never seen, it can add a steering nudge to most answers while the normal answer stays
+            intact. What it cannot yet do is reliably lead a user somewhere over a free conversation. I treat that
+            gap as something to measure carefully, not as a result to oversell. The work is defensive red-teaming.
+            The aim is to learn what a memory layer must enforce, such as where each stored fact came from, what it
+            applies to, and no direct writes from outside content, before assistants with long-term memory are
+            everywhere. A related privacy study had a sobering result. Perturbations meant to protect a photo from
+            attribute inference mostly stop working when the photo is read by a different model.
+          </p>
+        </li>
+
+        <!-- 6 · decision models (ongoing) -->
+        <li class="step future">
+          <span class="num">6</span>
+          <h3>Do decision models use the evidence they are given?</h3>
+          <p class="venue">ongoing · Ph.D., UTokyo · since Oct 2026 · evaluation</p>
+          <p>
+            I started with a training question. In synthetic worlds where the true probability of every outcome is
+            known exactly (building on <a href="https://arxiv.org/abs/2610.17016">ProbabilityBench</a>), would
+            training an LLM on those exact probabilities make it better calibrated than training on sampled labels?
+            Only slightly, and the reason turned out to be simple. Standard proper losses have the same optimum for
+            both targets, so the exact target mainly lowers variance. I stopped that line.
+          </p>
+          <p>
+            What it left behind was a <strong>yardstick</strong>. In these worlds one can compute exactly what an ideal
+            learner should believe after seeing <em>k</em> examples, and compare any model to that. Commercial decision
+            models turn out to use only part of the information in the examples. Some jump to certainty after a few
+            examples that happen to agree, and model rankings reorder depending on how much evidence they get.
+            Real deployments, however, rarely hand a model a set of examples. They give it a written policy and one
+            case. The current tests therefore run on real loan records. I change one clause of a lending policy and
+            check that the model's decisions flip on exactly the cases the change affects, and on no others.
+          </p>
+
+          <figure class="demo" id="demo-ev">
+            <button class="hide-btn" type="button">hide</button>
+            <div class="demo-body">
+              <p class="ev-q">
+                <strong>Will this season's harvest meet its target?</strong> Domain knowledge alone says about
+                60%. Each past season shown to the model is one labelled example.
+              </p>
+              <div class="ev-chips" id="evChips" aria-label="Examples seen so far"></div>
+              <div class="seg" role="group" aria-label="Add an example">
+                <button type="button" id="evHit">+ a season that met it</button>
+                <button type="button" id="evMiss">+ a season that missed</button>
+                <button type="button" id="evReset" class="ghost">start over</button>
+              </div>
+              <div class="ev-rows">
+                <div class="kv-row">
+                  <div class="kv-label">ideal learner</div>
+                  <div class="kv-track"><div class="ev-fill ideal" id="evIdeal"></div></div>
+                  <output class="ev-val" id="evIdealOut"></output>
+                </div>
+                <div class="kv-row">
+                  <div class="kv-label">over-trusting model</div>
+                  <div class="kv-track"><div class="ev-fill model" id="evModel"></div></div>
+                  <output class="ev-val" id="evModelOut"></output>
+                </div>
+              </div>
+              <figcaption id="evCap"></figcaption>
+              <p class="note">Toy illustration: the ideal learner is a Beta prior updated by the examples, and the
+                “model” is a caricature of one failure mode seen in the project. The numbers are illustrative.</p>
+            </div>
+          </figure>
+        </li>
+
+        <!-- 7 · honest measurement (ongoing) -->
+        <li class="step future">
+          <span class="num">7</span>
+          <h3>Where do the gains actually come from?</h3>
+          <p class="venue">ongoing · since Oct 2026 · long tail, SFT, SAE, small models</p>
+          <p>
+            Back to familiar ground, with a different question. In long-tailed recognition, a method can look
+            better simply because it shifts predictions toward rare classes, which a plain baseline with a tuned
+            post-hoc adjustment also does. I am re-checking released ImageNet-LT checkpoints with that
+            adjustment in place. A few points of the reported gains turn out to be this prior shift, and
+            synthetic images of rare classes add little over duplicating the real ones once the comparison is fair.
+            Alongside this, I ran a few shorter studies, each asking whether a popular recipe does what we assume it does:
+          </p>
+          <ul class="mini">
+            <li><strong>Filtering SFT data with verifiers.</strong> A stricter verifier keeps cleaner answers but
+              fewer distinct prompts, and the lost coverage can cost more than the removed noise saves.</li>
+            <li><strong>Sparse autoencoders.</strong> Reconstruction, interpretable readouts, and faithfulness are
+              different goals, and no variant wins all of them when concepts are long-tailed.</li>
+            <li><strong>Small models on device.</strong> A small model's own confidence recovers well under half of
+              the gain that perfect knowledge of when to hand a question to a larger model would give.</li>
+          </ul>
+          <p class="muted small">Some of these I stopped on purpose. Knowing what not to pursue is part of the work.</p>
         </li>
       </ol>
     </section>

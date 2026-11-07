@@ -199,4 +199,46 @@
     window.addEventListener('resize', render);
     render();
   })();
+
+  /* ───────── 6 · ideal learner vs. over-trusting model ───────── */
+  if (document.getElementById('demo-ev')) (() => {
+    const el = id => document.getElementById(id);
+    const PRIOR = 0.6, STRENGTH = 4;          // Beta(2.4, 1.6): "about 60%", worth ~4 examples
+    const START = [0, 0, 0, 0];               // four seasons that all missed
+    let seen = START.slice();
+
+    const ideal = () => (PRIOR * STRENGTH + seen.filter(Boolean).length) / (STRENGTH + seen.length);
+    const model = () => {                     // caricature: drops the prior, reads agreement as certainty
+      const n = seen.length, h = seen.filter(Boolean).length;
+      if (n === 0) return PRIOR;
+      if (n >= 3 && (h === 0 || h === n)) return h ? 1 : 0;
+      const f = h / n;
+      return n < 3 ? (PRIOR + f) / 2 : f;
+    };
+    const pct = x => Math.round(x * 100) + '%';
+
+    function render() {
+      const chips = el('evChips');
+      chips.innerHTML = seen.length
+        ? seen.map(v => v ? '<i class="hit" title="met target">✓</i>' : '<i class="miss" title="missed">✗</i>').join('')
+        : '<span class="muted">no examples yet</span>';
+      const a = ideal(), b = model();
+      el('evIdeal').style.width = Math.max(a * 100, 1.5) + '%';
+      el('evModel').style.width = Math.max(b * 100, 1.5) + '%';
+      el('evIdealOut').textContent = pct(a);
+      el('evModelOut').textContent = pct(b);
+      const n = seen.length, h = seen.filter(Boolean).length;
+      let cap;
+      if (n === 0) cap = 'With no examples, both fall back on domain knowledge.';
+      else if (n >= 3 && (h === 0 || h === n))
+        cap = `After ${n} seasons that all ${h ? 'met' : 'missed'} the target, the ideal learner says <strong>${pct(a)}</strong>: ${n} seasons are some evidence, not proof. A model that reads agreement as certainty says <strong>${pct(b)}</strong>, and any decision built on that number inherits the error.`;
+      else cap = `With mixed evidence the two are closer. The gap is largest when a few examples happen to agree, and a known ideal answer is what makes the gap measurable at all.`;
+      el('evCap').innerHTML = cap;
+    }
+
+    el('evHit').addEventListener('click', () => { if (seen.length < 16) seen.push(1); render(); });
+    el('evMiss').addEventListener('click', () => { if (seen.length < 16) seen.push(0); render(); });
+    el('evReset').addEventListener('click', () => { seen = []; render(); });
+    render();
+  })();
 })();
