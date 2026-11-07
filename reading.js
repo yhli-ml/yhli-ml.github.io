@@ -56,8 +56,11 @@
 
   /* ───────── rendering helpers ───────── */
   const esc = s => s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  // Join soft line breaks between CJK characters, so wrapped Chinese text gets no stray spaces.
+  const CJK = '\u2e80-\u9fff\uf900-\ufaff\uff00-\uffef';
+  const joinCJK = s => s.replace(new RegExp(`([${CJK}])\\n[ \\t]*(?=[${CJK}])`, 'g'), '$1');
   const md = s => window.marked
-    ? window.marked.parse(s)
+    ? window.marked.parse(joinCJK(s))
     : s.split(/\n{2,}/).map(p => `<p>${esc(p)}</p>`).join('');
   const fmt = d => d ? d.toLocaleDateString('en', { year: 'numeric', month: 'short', day: 'numeric' }) : '';
   const dayKey = d => `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;

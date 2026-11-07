@@ -23,3 +23,34 @@ link: https://arxiv.org/abs/xxxx.xxxxx
 - 这对 <!- - 和 - -> 之间的内容不会显示在网页上。
 -->
 
+## Co-teaching: Robust Training of Deep Neural Networks with Extremely Noisy Labels
+date: 2026-11-07
+type: paper
+by: Han et al., NeurIPS 2018
+link: https://arxiv.org/abs/1804.06872
+
+（示例笔记）带噪标签学习的经典工作。核心观察是：深度网络会**先拟合干净样本、后记住噪声样本**，
+所以训练早期 loss 小的样本更可能是干净的。
+
+Co-teaching 同时训练两个网络，每个 mini-batch 里各自挑出 small-loss 的样本，**交给对方**更新参数。
+两个网络的错误不完全相同，交叉筛选可以减少单个网络「自己确认自己错误」的累积。
+
+- 筛选比例随训练逐步减小到 1 − 噪声率，所以需要事先估计噪声率。
+- 在长尾数据上，尾部类的干净样本 loss 本身就偏大，small-loss 准则容易把它们误当成噪声，
+  这是和我 ICCV 2025 工作相关的一个问题。
+
+## The Bitter Lesson
+date: 2026-11-06
+type: blog
+by: Rich Sutton, 2019
+link: http://www.incompleteideas.net/IncIdeas/BitterLesson.html
+
+(Example note.) A short essay arguing that, over 70 years of AI research, general methods that
+**scale with computation** (search and learning) have consistently beaten approaches that build in
+human knowledge about the domain.
+
+Why "bitter": building in our own understanding helps in the short term, but it tends to plateau,
+and the eventual breakthrough comes from the opposite approach.
+
+Worth rereading when designing methods: which parts of an idea will still matter when the model
+and the data are 100× larger?
