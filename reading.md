@@ -67,3 +67,22 @@ Turns out to be a interesting demo despite being quite over-hyping.
 
 Key takeaways: 1) Weight space programming is not new and even can be very old if you refer to Schmidhuber. 2) The 0.8B Qwen performs strangely bad on that benchmark, which is due to a bug of recursive loop. Astra is more of fixing a bug than understanding everything of each model weight param. 3) Be critical...
 
+## Thoughts on JEV
+
+date: 2026-11-09
+type: paper
+by: "Releasing the Inner Jev: A Simple Recipe for Open Decision Models" by Geuter et al.
+link: https://arxiv.org/pdf/2610.17205
+
+Decision model architecture seems a fake proposition at this point. 
+
+This paper shows that directly fine-tune a Gemma-31B (with LoRA, on their designed datasets, and they also train 5B level model and the result is no bad) surpasses Jev 1.13 on both ACC and ECE. That's brutal tbh. I don't understand the meaning of Jev's unique architecture now. Maybe for better efficiency? Maybe for better concurrency?
+
+Now it is only limited tests, we'll see more of it come afterwards surely.
+
+
+
+
+
+
+
