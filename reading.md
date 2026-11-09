@@ -58,7 +58,7 @@ I believe this has to do with any other kinds of jailbreaking. For example, adve
 
 date: 2026-11-02
 type: blog
-by: Rikiya Takehi et al. at MIT CSAIL
+by: Rikiya Takehi et al. @ MIT CSAIL
 link: https://rikiyat.github.io/blog/weight-space-programming/
 
 A MIT CSAIL blog argued that they could use GPT-Astra directly to directly edit the model weights of a 0.8B Qwen model and significantly improve its performance.
@@ -71,7 +71,7 @@ Key takeaways: 1) Weight space programming is not new and even can be very old i
 
 date: 2026-11-09
 type: paper
-by: "Releasing the Inner Jev: A Simple Recipe for Open Decision Models" by Geuter et al.
+by: "Releasing the Inner Jev: A Simple Recipe for Open Decision Models" by Geuter et al. @ Harvard
 link: https://arxiv.org/pdf/2610.17205
 
 Decision model architecture seems a fake proposition at this point. 
@@ -80,7 +80,16 @@ This paper shows that directly fine-tune a Gemma-31B (with LoRA, on their design
 
 Now it is only limited tests, we'll see more of it come afterwards surely.
 
+## Prevalence
 
+date: 2026-11-09
+type: paper
+by: Pinterest
+link: https://arxiv.org/pdf/2602.18518v1
+
+It's interesting that prevalence and exact number are actually reflecting one thing from complementary angle because exposure rate varies.
+
+Let's see whether someday Jev-like model could revolutionize prevalence estimation as well as content moderation jobs. LOL.
 
 
 
