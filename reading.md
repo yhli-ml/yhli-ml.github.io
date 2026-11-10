@@ -110,9 +110,11 @@ A more close reading of Inner Jev:
 
 5. Key takeaways: 
 
-   **Industrial SFT-ed model already has potential in decision-making tasks, to put it professionally, System One capabilities. All we need to do is directly readout the choice letters' logits and do a post-hoc temprature scaling if not satisfied about the calibration. **
+   Industrial SFT-ed model already has potential in decision-making tasks, to put it professionally, System One capabilities. All we need to do is directly readout the choice letters' logits and do a post-hoc temprature scaling if not satisfied about the calibration. 
 
-   **If not fully satisfied, we can further fine-tune the model to adapt to our decision-making tasks. Nothing special is needed.**
+   If not fully satisfied, we can further fine-tune the model to adapt to our decision-making tasks. Nothing special is needed.
+   
+   **Instruction-tuned LLMs already possess strong latent decision-making capabilities. LoRA-based supervised adaptation improves the representations used for decision readout, while training a new decision head contributes little additional benefit.**
 
 Wow, still brutal after second glimpse.
 
