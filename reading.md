@@ -93,7 +93,7 @@ Let's see whether someday Jev-like model could revolutionize prevalence estimati
 
 ## Thoughts on JEV 2 -- Inner Jev
 
-date: 2026-11-09
+date: 2026-11-10
 type: paper
 by: "Releasing the Inner Jev: A Simple Recipe for Open Decision Models" by Geuter et al. @ Harvard
 link: https://arxiv.org/pdf/2610.17205
