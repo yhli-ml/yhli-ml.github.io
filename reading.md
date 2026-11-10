@@ -91,7 +91,28 @@ It's interesting that prevalence and exact number are actually reflecting one th
 
 Let's see whether someday Jev-like model could revolutionize prevalence estimation as well as content moderation jobs. LOL.
 
+## Thoughts on JEV 2 -- Inner Jev
 
+date: 2026-11-09
+type: paper
+by: "Releasing the Inner Jev: A Simple Recipe for Open Decision Models" by Geuter et al. @ Harvard
+link: https://arxiv.org/pdf/2610.17205
 
+A more close reading of Inner Jev:
 
+1. Zero-shot with only logit readout of the choices letter (A, B, C, etc, support up to 16 choices). It already come close to Jev 1.13 on JevBench;
+
+2. Decision head, or we can see it as a linear probe intrinsically, is basically useless here.
+
+3. LoRA SFT is what is important here for the model to adapt to the readout decision scenarios. 
+
+4. Instruction Tuning (LLM's SFT) is what is important for the model to have basic decision capabilities.
+
+5. Key takeaways: 
+
+   **Industrial SFT-ed model already has potential in decision-making tasks, to put it professionally, System One capabilities. All we need to do is directly readout the choice letters' logits and do a post-hoc temprature scaling if not satisfied about the calibration. **
+
+   **If not fully satisfied, we can further fine-tune the model to adapt to our decision-making tasks. Nothing special is needed.**
+
+Wow, still brutal after second glimpse.
 
