@@ -118,3 +118,20 @@ A more close reading of Inner Jev:
 
 Wow, still brutal after second glimpse.
 
+## T$^2$PO: Uncertainty-Guided Exploration Control for Stable Multi-Turn Agentic Reinforcement Learning (ICML '26 Spotlight)
+
+date: 2026-11-11
+type: paper
+by: Wang et al. @ UCLA & Amazon
+link: https://arxiv.org/pdf/2605.02178
+
+The paper described two core challenges: 1) Credit assignment of one-turn RL cannot be directly adapted to multi-turn RL because its long-horizon leading to sparse rewards. 2) In order to speedup the rollout, approaches use techniques while hurt the stability of learning process.
+
+To tackle the above, the paper proposed to: 1) early-stopping at reasoning since reasoning for too long could be less informative and noisy. 2) rollout filtering at turn level, not discarding but re-sampling dynamically.
+
+If we look into it more detailedly, we can see the first token level early stop is kinda like what was widely used in noisy label learning. Uncertainty modeling uses entropy and confidence. And information gain is small and things like that. I mean, this is just like that.
+
+About the most influential part: turn-level re-sampling. I think it is kinda smart but over-hyped. This is just like we need high-quality data. And we try our best to select the most high-quality data for training. Don't see it as a very novel point.
+
+This has made me think about the noise in RL, especially about **credit assignment** in multi-turn RL (Even I don't know if it is still a hot topic). Maybe it's time to dig into this direction more.
+
