@@ -135,7 +135,7 @@ About the most influential part: turn-level re-sampling. I think it is kinda sma
 
 This has made me think about the noise in RL, especially about **credit assignment** in multi-turn RL (Even I don't know if it is still a hot topic). Maybe it's time to dig into this direction more.
 
-Addtion 1: I think maybe entropy/confidence metric have more use cases in RL/credit assignment or even in other fields.
+Addition 1: I think maybe entropy/confidence metric have more use cases in RL/credit assignment or even in other fields.
 
 
 
