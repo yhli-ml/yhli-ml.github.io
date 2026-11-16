@@ -118,3 +118,7 @@ A more close reading of Inner Jev:
 
 Wow, still brutal after second glimpse.
 
+## About the entropy/confidence paper
+
+I think maybe entropy/confidence metric have more use cases in RL/credit assignment or even in other fields.
+
